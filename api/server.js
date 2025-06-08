@@ -1,20 +1,23 @@
 import express from "express";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
 import connectDB from "../config/db.js";
 import morgan from "morgan";
 import cors from "cors";
 import usermodel from "../usermodel.js";
 import ProductRoutes from "../productroutes.js";
-dotenv.config();           
 
-//N0T8XlWQLB5VQ1H9wMYTJ2eB
+// Load environment variables
+dotenv.config();
+
 const app = express();
-connectDB();
+
+// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use(cors());
+
+// Routes
 app.use("/api/v1/Product", ProductRoutes);
 
 app.get("/", (req, res) => {
@@ -48,5 +51,20 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// ❗ Vercel expects you to export a function or Express instance
+// Start server only after DB connection
+const startServer = async () => {
+  try {
+    await connectDB(); // Wait for DB to connect
+    const PORT = process.env.PORT || 8080;
+    app.listen(PORT, () => {
+      console.log(`✅ Server is running on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error("❌ Failed to start server:", err.message);
+  }
+};
+
+startServer();
+
+// For Vercel or serverless support
 export default app;

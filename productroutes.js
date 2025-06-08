@@ -6,7 +6,7 @@ import { createproductcontroller, deleteproductcontroller, getpersondatacontroll
 const router = express.Router();
 
 router.post('/create-product', formidable(), createproductcontroller);
-router.post('/get-product',  getproductcontroller);
+router.get('/get-product',  getproductcontroller);
 router.delete('/delete-products/:pid',deleteproductcontroller)
 router.post('/person-data',persondatacontroller)
 router.get('/getperson-data',getpersondatacontroller)

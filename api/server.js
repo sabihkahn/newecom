@@ -6,8 +6,8 @@ import morgan from "morgan";
 import cors from "cors";
 import usermodel from "../usermodel.js";
 import ProductRoutes from "../productroutes.js";
+dotenv.config();           
 
-dotenv.config();
 connectDB();
 //N0T8XlWQLB5VQ1H9wMYTJ2eB
 const app = express();

@@ -1,11 +1,12 @@
 // productroutes.js
 import express from 'express';
 import formidable from 'express-formidable';
-import { createproductcontroller, deleteproductcontroller, getpersondatacontroller, persondatacontroller } from './productcontroller.js';
+import { createproductcontroller, deleteproductcontroller, getpersondatacontroller, getproductcontroller, persondatacontroller } from './productcontroller.js';
 
 const router = express.Router();
 
 router.post('/create-product', formidable(), createproductcontroller);
+router.post('/get-product',  getproductcontroller);
 router.delete('/delete-products/:pid',deleteproductcontroller)
 router.post('/person-data',persondatacontroller)
 router.get('/getperson-data',getpersondatacontroller)

@@ -108,3 +108,21 @@ export const getpersondatacontroller = async (req, res) => {
         });
     }
 };
+export const getproductcontroller = async (req, res) => {
+    try {
+        const data = await produtmodel.find({}); // Added `await`
+
+        res.status(200).send({
+            success: true,
+            message: "product added sucessfully",
+            data,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({
+            success: false,
+            message: "Error fetching product",
+            error: error.message,
+        });
+    }
+};

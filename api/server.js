@@ -8,9 +8,9 @@ import usermodel from "../usermodel.js";
 import ProductRoutes from "../productroutes.js";
 dotenv.config();           
 
-connectDB();
 //N0T8XlWQLB5VQ1H9wMYTJ2eB
 const app = express();
+connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));

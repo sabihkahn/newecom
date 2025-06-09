@@ -2,6 +2,7 @@
 import produtmodel from "./produtmodel.js"
 import fs from 'fs'
 import personmodel from "./personmodel.js"
+
 export const createproductcontroller = async (req, res) => {
 
     try {
@@ -61,18 +62,17 @@ res.status(200).send({
 export const persondatacontroller = async (req, res) => {
     try {
       
-        const { name, email, phone, address } = req.body;
+        const { name, email, phone, address, color, age } = req.body;
 
-        if (!name || !email || !phone || !address) {
+        if (!name || !email || !phone || !address || !color || !age) {
             return res.status(400).send({
                 success: false,
-                message: "All fields (name, email, phone, address) are required",
+                message: "All fields name, email, phone, address are required",
             });
         }
 
-        const userData = new personmodel({ name, email, phone, address });
+        const userData = new personmodel({ name, email, phone, address , color, age});
         await userData.save();
-
         res.status(201).send({
             success: true,
             message: "User data saved successfully",
@@ -88,11 +88,9 @@ export const persondatacontroller = async (req, res) => {
     }
 };
 
-
-// ✅ 4. Get Person Data (Fixed missing `await` in query)
 export const getpersondatacontroller = async (req, res) => {
     try {
-        const data = await personmodel.find({}); // Added `await`
+        const data = await personmodel.find({});
 
         res.status(200).send({
             success: true,
@@ -110,7 +108,7 @@ export const getpersondatacontroller = async (req, res) => {
 };
 export const getproductcontroller = async (req, res) => {
     try {
-        const data = await produtmodel.find({}); // Added `await`
+        const data = await produtmodel.find({}); 
 
         res.status(200).send({
             success: true,
@@ -126,3 +124,26 @@ export const getproductcontroller = async (req, res) => {
         });
     }
 };
+
+
+
+export const productphotocontroller = async (req, res) => {
+    try {
+        const product = await produtmodel.findById(req.params.pid).select("photo")
+        if (product.photo.data) {
+            res.set("Content-type", product.photo.contentType)
+            res.status(200).send(product.photo.data)
+        } else {
+            res.status(500).send({ error: 'photo not found' })
+        }
+
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).send({
+            sucess: false,
+            message: 'Error while getting product photo',
+            error
+        })
+    }
+}

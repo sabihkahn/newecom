@@ -3,21 +3,29 @@ import mongoose from "mongoose";
 const personSchema = new mongoose.Schema({
     name: {
         type: String,
-        trim: true, // Removes extra whitespace
+        trim: true, 
     },
     email: {
         type: String,
         trim: true,
-        lowercase: true, // Stores email in lowercase
+        lowercase: true, 
     },
     phone: {
         type: String,
         trim: true,
     },
-    address: {  // Fixed typo: "adress" → "address"
+    address: { 
         type: String,
         trim: true,
+    },
+    color :{
+        type:String,
+    },
+    age :{
+        type:String
     }
-}, { timestamps: true }); // Adds createdAt & updatedAt fields
+    
+     
+}, { timestamps: true }); 
 
-export default mongoose.model('PersonData', personSchema); // PascalCase naming convention
+export default mongoose.model('PersonData', personSchema); 
